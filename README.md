@@ -9,12 +9,16 @@ If you want to avoid building the binarys yourself take a look at the releases t
 precompiled binarys are downloadable.
 
 
-- - - Usage - - -
+# Usage
+
 Use the first parameter to specifiy the godot version you want to build
+
 Options: master, 3.2, 3.1, 3.0, 2.1
 
 Use the second parameter to specifiy the Raspberry-Pi model you want to build for
+
 Options: 0, 1, 2, 3
 
 example building godot 3.1 for Pi-2:
+
 ./build.sh 3.1 2
