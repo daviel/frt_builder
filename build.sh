@@ -4,7 +4,7 @@ if [ "$#" -lt 2 ] || [ "$1" == "help" ]
 then
 	echo "- - - Usage - - -"
 	echo "Use the first parameter to specifiy the godot version you want to build"
-	echo "Options: master, 3.2, 3.1, 3.0, 2.1"
+	echo "Options: master, 3.3, 3.2, 3.1, 3.0, 2.1"
 	echo ""
 	echo "Use the second parameter to specifiy the Raspberry-Pi model you want to build for"
 	echo "Options: 0, 1, 2, 3"
@@ -29,19 +29,19 @@ cp ./config.sh ./raspbian/root/
 chroot ./raspbian /root/config.sh
 
 
-if [ "$1" == "master" ] || [ "$1" == "3.2" ] || [ "$1" == "3.1" ] || [ "$1" == "3.0" ] || [ "$1" == "2.1" ]
+if [ "$1" == "master" ] || [ "$1" == "3.3" ] || [ "$1" == "3.2" ] || [ "$1" == "3.1" ] || [ "$1" == "3.0" ] || [ "$1" == "2.1" ]
 then
 	echo ""
 	echo "- - - Cloning Repositorys - - -"
 	echo ""
-	
+
 	# check if target dir exists; just pull commits rather than full clone
 	if [ -d "./raspbian/godot-$1" ]; then
 		chroot ./raspbian/ /bin/bash -c "cd /godot-$1 && git pull"
 	else
 		chroot ./raspbian git clone https://github.com/godotengine/godot -b $1 godot-$1
 	fi
-	
+
 	if [ -d "./raspbian/godot-$1/platform/frt" ]; then
 		chroot ./raspbian/ /bin/bash -c "cd /godot-$1/platform/frt && git pull"
 	else
@@ -61,9 +61,9 @@ then
 	echo ""
 	echo "- - - Building for Pi-$2 - - -"
 	echo ""
-	
+
 	chroot ./raspbian/ /bin/bash -c "cd /godot-$1 && scons platform=frt target=release frt_arch=pi$2 module_webm_enabled=no builtin_freetype=yes tools=no -j $(nproc)"
-	
+
 	mkdir bin
 
 	echo ""
